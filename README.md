@@ -3,6 +3,12 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ## 视频学习地址：
 https://www.bilibili.com/video/BV157pRe8EyD?spm_id_from=333.788.videopod.sections&vd_source=f752be738fe5b7ed9e4b277a1e9371bf
 
+## 视频文档地址：
+https://zhihur.com/2024/08/07/next-base/#more
+
+## 视频源码地址：
+https://gitee.com/ifercarly/next-study
+
 ## Getting Started
 
 First, run the development server:
