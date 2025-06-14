@@ -1,5 +1,8 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## 视频学习地址：
+https://www.bilibili.com/video/BV157pRe8EyD?spm_id_from=333.788.videopod.sections&vd_source=f752be738fe5b7ed9e4b277a1e9371bf
+
 ## Getting Started
 
 First, run the development server:
