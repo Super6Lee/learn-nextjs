@@ -6,6 +6,9 @@ https://www.bilibili.com/video/BV157pRe8EyD?spm_id_from=333.788.videopod.section
 ## 视频文档地址：
 https://zhihur.com/2024/08/07/next-base/#more
 
+## 视频源码地址：
+https://gitee.com/ifercarly/next-study
+
 ## Getting Started
 
 First, run the development server:
