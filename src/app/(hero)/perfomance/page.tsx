@@ -1,6 +1,6 @@
 import React from "react"
 import Hero from "@/components/hero"
-import perfomanceImage from "../../../public/images/performance.png"
+import perfomanceImage from "../../../../public/images/performance.png"
 
 export const metadata = {
   title: "Perfomance",

@@ -10,15 +10,9 @@ const linkData = [
   {name: "Scale", href: "/scale"},
 ];
 
-const accessLink = linkData.map(link => link.href);
-accessLink.push("/");
 
 export default function Header() {
   const pathname = usePathname();
-
-  if (!accessLink.includes(pathname)) {
-    return null;
-  }
 
   return (
     <nav className="absolute w-full z-10">
