@@ -1,29 +1,15 @@
-"use client";
-import { Avatar, List } from "antd";
 import React from "react";
 
-import { photos } from '@/data/index';
-import Link from "next/link";
+import { Metadata } from "next";
+import BlogList from "@/components/blogList";
+
+export const metadata: Metadata = {
+    title: "Blog",
+    description: "Blog",
+}
 
 export default function Page() {
   return (
-    <div>
-      <List
-        itemLayout="horizontal"
-        dataSource={photos}
-        renderItem={(item, index) => (
-          <List.Item>
-            <List.Item.Meta className="!items-center"
-              avatar={
-                <Avatar
-                  src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
-                />
-              }
-              title={<Link href={`/blog/${item.id}`}>{item.alt}</Link>}
-            />
-          </List.Item>
-        )}
-      />
-    </div>
+    <BlogList></BlogList>
   );
 }

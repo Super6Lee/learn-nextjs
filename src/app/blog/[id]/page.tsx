@@ -1,7 +1,14 @@
 import { Card, Col, Row } from "antd";
 import React from "react";
 import { photos } from "@/data/index";
-import Link from "next/link";
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const photo = photos.find(item => item.id === params.id);
+  return {
+    title: `博客详情 - ${photo?.id}`,
+    description: `博客详情 - ${photo?.alt}`,
+  };
+}
 
 export default function page({ params }: { params: { id: string } }) {
  
