@@ -15,8 +15,8 @@ export async function GET(request: NextRequest) {
 
   const filteredData = data.filter((item) => {
     return (
-      item.title.includes(title.toLowerCase()) &&
-      item.content.includes(content.toLowerCase())
+      item.title.includes(title) &&
+      item.content.includes(content)
     );
   });
 
