@@ -322,17 +322,21 @@ export default function Page() {
   }, [isDragging, lastMousePosition, isEditModalOpen]);
 
   return (
+    /** 内边距 5, 最大宽度 7xl, 水平居中, 相对定位 */
     <div className="p-5 max-w-7xl mx-auto relative">
+      {/** 提交会触发handleSearch函数    CSS 样式: 弹性布局, 底部外间距 5, 交叉轴居中对齐, 子元素间距 2.5 */}
       <form onSubmit={handleSearch} className="flex mb-5 items-center gap-2.5">
         <input
           type="text"
           value={searchTitle}
           onChange={(e) => setSearchTitle(e.target.value)}
           placeholder="搜索标题"
+          /** 内边距 2, 边框样式: 灰色 300, 圆角, 最大宽度 1/4, 弹性增长 */
           className="p-2 border border-gray-300 rounded max-w-xs flex-grow"
         />
         <button
           type="submit"
+          /** 内边距水平轴 4, 内边距垂直轴 2, 背景颜色: 白色, 边框样式: 实线 1px边框, 灰色 300, 圆角, 鼠标悬停时背景颜色: 灰色 100 */
           className="px-4 py-2 bg-white border border-gray-300 rounded cursor-pointer hover:bg-gray-100"
         >
           搜索
@@ -340,6 +344,7 @@ export default function Page() {
         <button
           type="button"
           onClick={handleReset}
+          /** 内边距水平轴 4, 内边距垂直轴 2, 背景颜色: 白色, 边框样式: 实线 1px边框, 灰色 300, 圆角, 鼠标悬停时背景颜色: 灰色 100 */
           className="px-4 py-2 bg-white border border-gray-300 rounded cursor-pointer hover:bg-gray-100"
         >
           重置
@@ -347,6 +352,7 @@ export default function Page() {
         <button
           type="button"
           onClick={handleOpenModal}
+          /** 内边距水平轴 4, 内边距垂直轴 2, 背景颜色: 蓝色 500, 文本颜色: 白色, 边框样式: 实线 1px边框, 蓝色 500, 圆角, 鼠标悬停时背景颜色: 蓝色 400, 鼠标悬停时边框颜色: 蓝色 400 左外边距自动 */
           className="px-4 py-2 bg-blue-500 text-white border border-blue-500 rounded cursor-pointer hover:bg-blue-400 hover:border-blue-400 ml-auto"
         >
           添加
@@ -354,16 +360,18 @@ export default function Page() {
       </form>
 
       {!isLoading ? (
+        /** 表格宽度 100%, 边框样式: 无间隔, 底部外边距 5 */
         <table className="w-full border-collapse mb-5">
           <thead>
             <tr>
-              <th className="p-3 text-left border-b border-gray-100 bg-gray-50 font-medium">
+              {/** 内边距 3, 文本对齐: 左对齐, 边框样式: 实线 1px边框, 灰色 200, 背景颜色: 灰色 50, 字体粗细: 中等 */}
+              <th className="p-3 text-left border border-gray-200 bg-gray-50 font-medium">
                 标题
               </th>
-              <th className="p-3 text-left border-b border-gray-100 bg-gray-50 font-medium">
+              <th className="p-3 text-left border border-gray-200 bg-gray-50 font-medium">
                 内容
               </th>
-              <th className="p-3 text-left border-b border-gray-100 bg-gray-50 font-medium">
+              <th className="p-3 text-left border border-gray-200 bg-gray-50 font-medium">
                 操作
               </th>
             </tr>
@@ -372,17 +380,19 @@ export default function Page() {
             {articles.length > 0 ? (
               articles.map((article) => (
                 <tr key={article.id}>
-                  <td className="p-3 text-left border-b border-gray-100">
+                  {/** 内边距 3, 文本对齐: 左对齐, 边框样式: 实线 1px边框, 灰色 200 */}
+                  <td className="p-3 text-left border border-gray-200">
                     {article.title}
                   </td>
-                  <td className="p-3 text-left border-b border-gray-100">
+                  <td className="p-3 text-left border border-gray-200">
                     {article.content}
                   </td>
-                  <td className="p-3 text-left border-b border-gray-100">
+                  <td className="p-3 text-left border border-gray-200">
                     <button
                       onClick={() => {
                         handleOpenEditModal(article.id);
                       }}
+                      /** 右外边距 2.5, 文本颜色: 蓝色 500, 无下划线, 背景颜色: 透明, 边框样式: 无, 鼠标悬停时文本颜色: 蓝色 400 */
                       className="mr-2.5 text-blue-500 no-underline bg-transparent border-none cursor-pointer"
                     >
                       编辑
@@ -419,6 +429,7 @@ export default function Page() {
           <button
             onClick={() => handlePageChange(pageNum - 1)}
             disabled={pageNum <= 1}
+            /** 最小宽度 32px, 高度 8px, 内边距水平轴 1.5, 边框样式: 实线 1px边框, 灰色 300, 背景颜色: 白色, 圆角, 弹性布局: 交叉轴居中对齐, 主轴居中对齐, 禁用时文本颜色: 灰色 400, 禁用时鼠标样式: 不可用, 鼠标悬停时边框颜色: 蓝色 500, 鼠标悬停时文本颜色: 蓝色 500 */
             className="min-w-[32px] h-8 px-1.5 border border-gray-300 bg-white rounded flex items-center justify-center disabled:text-gray-400 disabled:cursor-not-allowed hover:border-blue-500 hover:text-blue-500"
           >
             &lt;
@@ -448,15 +459,7 @@ export default function Page() {
 
       {/* 添加文章模态框 */}
       {isModalOpen && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 z-50">
-          {/* 轻微透明背景，不遮挡内容 */}
-          <div
-            className="absolute inset-0"
-            style={{
-              zIndex: 51,
-            }}
-          ></div>
-
+        <div className="fixed inset-0 z-50">
           {/* 可拖拽的弹窗 - 整个弹窗可拖拽 */}
           <div
             ref={modalRef}
