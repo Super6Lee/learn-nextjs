@@ -2,7 +2,7 @@ import React from "react";
 import { photos } from "@/data/data";
 import Image from "next/image";
 
-export default function page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: { id: string } }) {
   const photo = photos.find((item) => item.id === params.id);
 
   if (!photo) {
@@ -20,7 +20,7 @@ export default function page({ params }: { params: { id: string } }) {
       />
       <div className="border-2 border-dashed border-gray-300 rounded-lg p-3 mt-6 leading-8">
         <p>
-          <strong>Tiltle:</strong> {photo.alt}
+          <strong>Title:</strong> {photo.alt}
         </p>
         <p>
           <strong>Price:</strong> {photo.price}
