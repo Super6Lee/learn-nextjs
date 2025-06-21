@@ -39,6 +39,7 @@ export default function Page() {
   const modalRef = useRef<HTMLDivElement>(null);
   const editModalRef = useRef<HTMLDivElement>(null);
 
+  // 组件挂载时，pageNum 和 pageSize 变化时，获取文章列表
   useEffect(() => {
     fetchArticles();
   }, [pageNum, pageSize]);
@@ -53,8 +54,15 @@ export default function Page() {
         content,
       });
 
+      // 打印请求参数  
+      // queryParams.entries() 返回一个迭代器，迭代器中包含所有参数的键值对
+      // Object.fromEntries(queryParams.entries()) 将迭代器转换为对象
       console.log("发送请求参数:", Object.fromEntries(queryParams.entries()));
 
+      // 发送请求
+      // fetch 函数 发送请求
+      // /api/articles?pageNum=1&pageSize=4&title=&content=
+      // 请求参数 会自动拼接在 url 后面
       const response = await fetch(`/api/articles?${queryParams}`);
       const data = await response.json();
       setArticles(data.data);
@@ -66,7 +74,13 @@ export default function Page() {
     }
   };
 
+  /**
+   * 
+   * @param e 事件对象    ? 表示可以为空    React.FormEvent 表单事件
+   */
   const handleSearch = (e?: React.FormEvent) => {
+
+    // 如果 e 存在，则阻止默认行为 (默认行为是 执行提交表单提交和刷新页面)，执行下面代码
     if (e) e.preventDefault();
     setTitle(searchTitle);
     setPageNum(1);
@@ -155,7 +169,9 @@ export default function Page() {
   ) => {
     const { name, value } = e.target;
     setNewArticle((prev: typeof newArticle) => ({
+      // 旧对象的所有属性
       ...prev,
+      // 新对象的属性
       [name]: value,
     }));
   };
@@ -261,7 +277,7 @@ export default function Page() {
   };
 
   // 开始拖拽 - 整个弹窗可拖拽
-  const handleMouseDown = (e: React.MouseEvent, isEdit = false) => {
+  const handleMouseDown = (e: React.MouseEvent) => {
     // 排除表单元素，避免影响输入
     if (
       e.target instanceof HTMLInputElement ||
@@ -315,6 +331,7 @@ export default function Page() {
       window.addEventListener("mouseup", handleMouseUp);
     }
 
+    // 移除全局鼠标事件监听器
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
@@ -322,6 +339,7 @@ export default function Page() {
   }, [isDragging, lastMousePosition, isEditModalOpen]);
 
   return (
+
     /** 内边距 5, 最大宽度 7xl, 水平居中, 相对定位 */
     <div className="p-5 max-w-7xl mx-auto relative">
       {/** 提交会触发handleSearch函数    CSS 样式: 弹性布局, 底部外间距 5, 交叉轴居中对齐, 子元素间距 2.5 */}
@@ -460,17 +478,23 @@ export default function Page() {
       {/* 添加文章模态框 */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50">
+
+          {/* 轻微透明背景，不遮挡内容，起到视觉聚焦、禁止背景交互的作用 */}
+          <div
+            className="absolute inset-0 bg-gray-100 opacity-50"
+            style={{
+              zIndex: 51,
+            }}
+          ></div>
+
           {/* 可拖拽的弹窗 - 整个弹窗可拖拽 */}
           <div
-            ref={modalRef}
-            className="bg-white rounded-lg shadow-xl p-8 w-full max-w-2xl absolute cursor-move"
+            // ref={modalRef}
+            className="bg-white rounded-lg shadow-xl p-8 w-full max-w-2xl absolute cursor-move left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-52"
             style={{
-              left: "50%",
-              top: "50%",
-              transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px))`,
-              zIndex: 52,
+              transform: `translate(${position.x}px, ${position.y}px)`,
             }}
-            onMouseDown={(e) => handleMouseDown(e, false)}
+            onMouseDown={(e) => handleMouseDown(e)}
           >
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-medium select-none">添加文章</h2>
@@ -478,6 +502,7 @@ export default function Page() {
                 onClick={handleCloseModal}
                 className="text-gray-500 hover:text-gray-700"
               >
+                {/** 画一个 X 图标 */}
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -549,9 +574,10 @@ export default function Page() {
       {/* 编辑文章模态框 */}
       {isEditModalOpen && editingArticle && (
         <div className="fixed top-0 left-0 right-0 bottom-0 z-50">
-          {/* 轻微透明背景，不遮挡内容 */}
+          
+          {/* 轻微透明背景，不遮挡内容，起到视觉聚焦、禁止背景交互的作用 */}
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 bg-gray-100 opacity-50"
             style={{
               zIndex: 51,
             }}
@@ -559,15 +585,12 @@ export default function Page() {
 
           {/* 可拖拽的弹窗 - 整个弹窗可拖拽 */}
           <div
-            ref={editModalRef}
-            className="bg-white rounded-lg shadow-xl p-8 w-full max-w-2xl absolute cursor-move"
+            // ref={editModalRef}
+            className="bg-white rounded-lg shadow-xl p-8 w-full max-w-2xl absolute cursor-move left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[52]"
             style={{
-              left: "50%",
-              top: "50%",
-              transform: `translate(calc(-50% + ${editPosition.x}px), calc(-50% + ${editPosition.y}px))`,
-              zIndex: 52,
+              transform: `translate(${editPosition.x}px, ${editPosition.y}px)`,
             }}
-            onMouseDown={(e) => handleMouseDown(e, true)}
+            onMouseDown={(e) => handleMouseDown(e)}
           >
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-medium select-none">编辑文章</h2>
